@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gallery_hero/src/providers/image_provider.dart' as p;
 
 class FullScreenImage extends StatefulWidget {
   @override
@@ -26,7 +25,8 @@ class _FullScreenImageState extends State<FullScreenImage> {
   Widget _fullScreenImage(BuildContext context) {
     return Stack(children: <Widget>[
       Image(
-        image: NetworkImage('https://picsum.photos/id/1/$screenWidth/$screenHeight'),
+        image: NetworkImage(
+            'https://picsum.photos/id/1/$screenWidth/$screenHeight'),
       ),
       Positioned(
         top: 0.0,

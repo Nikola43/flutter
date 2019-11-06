@@ -8,32 +8,42 @@ class GalleryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Galería'),
-      ),
-      body: _showImages(context),
-    );
+        appBar: AppBar(
+          title: Text('Galería'),
+        ),
+        body: SingleChildScrollView(child: _showTable(context)));
   }
 
-  Widget _showImages(BuildContext context) {
-    return SingleChildScrollView(
-        child: _showTable(context, imageProvider.getImageUrlList()));
-  }
+  Widget _showTable(BuildContext context) {
+    return FutureBuilder(
+        future: imageProvider.getNames(),
+        initialData: [],
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            List<Widget> columns = [];
+            print('-----------------');
 
-  Widget _showTable(BuildContext context, List<String> list) {
-    //final columns = list.map((image) => _drawImage(context, list[0])).toList();
+            print('Tiene datos');
 
-    List<Widget> columns = [Text(''),Text(''),Text(''),Text('')];
-    print('vece');
+            List<String> images = snapshot.data;
+            print(images.length);
+            int columSize = 4;
 
-    for (int i = 0; i < 4; i++) {
-      print('URL $i' + ' ' + list[i]);
-      columns[i] = _drawImage(context, list[i]);
-    }
+            for (int i = 0; i < 4; i++) {
+              print('URL $i' + ' ' + images[i]);
+              columns.add(_drawImage(context, images[i]));
+            }
+            print('-----------------');
 
-    final rows = list.map((image) => TableRow(children: columns)).toList();
-
-    return Table(children: rows);
+            //final columns =
+            //    images.map((image) => _drawImage(context, image)).toList();
+            final rows =
+                images.map((image) => TableRow(children: columns)).toList();
+            return Table(children: rows);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }
 

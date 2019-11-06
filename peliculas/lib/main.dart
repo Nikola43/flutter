@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialRoute: '/',
       routes: {
-        '/' : (BuildContext context) => HomePage(),
-        'film_detail' : (BuildContext context) => FilmDetail(),
+        '/': (BuildContext context) => HomePage(),
+        'film_detail': (BuildContext context) => EmailDetailPage(),
       },
     );
   }
